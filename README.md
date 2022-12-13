@@ -33,6 +33,8 @@ Create `.env` file in same directory as `main.py` with
 OPENAI_API_KEY=suPer$ecret!
 ```
 
+Run the local web server
+
 ```bash
 # change directory into folder containing main.py
 cd ~/Github/cstories-app/api
