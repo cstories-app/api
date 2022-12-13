@@ -1,5 +1,7 @@
 # api
 
+Source:
+* [Using FastAPI to Build Python Web APIs – Real Python](https://realpython.com/fastapi-python-web-apis/)
 
 ## Python setup
 
@@ -18,4 +20,13 @@ python3 -m pip install --upgrade pip
 
 # install modules
 python3 -m pip install --upgrade fastapi
+python3 -m pip install --upgrade uvicorn
+python3 -m pip install --upgrade python-dotenv
+```
+
+## Run locally
+
+```bash
+cd ~/Github/cstories-app/api
+uvicorn main:app --reload
 ```
