@@ -26,7 +26,16 @@ python3 -m pip install --upgrade python-dotenv
 
 ## Run locally
 
+Create `.env` file in same directory as `main.py` with 
+
+```sh
+# for ben@ecoquants.com
+OPENAI_API_KEY=suPer$ecret!
+```
+
 ```bash
+# change directory into folder containing main.py
 cd ~/Github/cstories-app/api
+# run local web server
 uvicorn main:app --reload
 ```
