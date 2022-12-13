@@ -18,3 +18,4 @@ python3 -m pip install --upgrade pip
 
 # install modules
 python3 -m pip install --upgrade fastapi
+```
