@@ -1,21 +1,21 @@
 # api
 
-Source:
-* [Using FastAPI to Build Python Web APIs – Real Python](https://realpython.com/fastapi-python-web-apis/)
+Source: [Using FastAPI to Build Python Web APIs – Real Python](https://realpython.com/fastapi-python-web-apis/)
 
 ## Server
 
-- $12/month
-- Ubuntu 22.04 LTS x64
-- 2 GB RAM  |  1 CPU  |  50GB SSD
-- Region: sfo3
-- Hostname: `cstories`
-- IP: `164.92.110.38`
+* $12/month
+* Ubuntu 22.04 LTS x64
+* 2 GB RAM  |  1 CPU  |  50GB SSD
+* Region: sfo3
+* Hostname: `cstories`
+* IP: `164.92.110.38`
 
 ### Users
-- bbest
-- cgrant
-- jzadra
+
+* bbest
+* cgrant
+* jzadra
 
 `sudo usermod -a -G sudo <user>`
 
@@ -23,14 +23,14 @@ Source:
 
 #### apt
 
-- net-tools
-- python-is-python3
-- python3.10-venv
-- apache2
+* net-tools
+* python-is-python3
+* python3.10-venv
+* apache2
 
 #### snap
 
-- certbot
+* certbot
 
 ### Share
 
@@ -91,4 +91,3 @@ Source:
     ```
 
 1. See it live: [http://164.92.110.38:8000](http://164.92.110.38:8000)
-
