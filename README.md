@@ -80,12 +80,6 @@ Live at [https://api.cstories.app](https://api.cstories.app)
     python -m pip install -r requirements.txt
     ```
 
-1. Open firewall at port 8000 (**for development only**)
-
-    ```sh
-    sudo ufw allow 8000
-    ```
-
 1. Run the app
 
     ```sh
@@ -144,6 +138,12 @@ Live at [https://api.cstories.app](https://api.cstories.app)
 
     ```sh
     sudo a2ensite api.conf
+    ```
+
+1. Restart Apache
+
+    ```sh
+    sudo systemctl restart apache2
     ```
 
 1. Generate SSL certificates
