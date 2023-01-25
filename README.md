@@ -1,5 +1,7 @@
 # api
 
+[![ci](https://github.com/cstories-app/api/actions/workflows/ci.yml/badge.svg)](https://github.com/cstories-app/api/actions/workflows/ci.yml)
+
 Source: [Using FastAPI to Build Python Web APIs – Real Python](https://realpython.com/fastapi-python-web-apis/)
 
 Live at [https://api.cstories.app](https://api.cstories.app)
@@ -69,6 +71,7 @@ Live at [https://api.cstories.app](https://api.cstories.app)
     ```sh
     cd api && \
     echo "OPENAI_API_KEY=MY_KEY" >> .env
+    echo "PATH_GOOGLE_SA_KEY_JSON=path/to/key.json" >> .env
     ```
 
 1. Create the Python virtual environment
