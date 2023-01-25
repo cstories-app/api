@@ -83,6 +83,6 @@ def answer(question: str, request: Request):
         frequency_penalty=0,
         presence_penalty=0,
     )
-    answer = response.choices[0].text
+    answer = response.choices[0].text.strip()
     add_q_a(question, answer, request.client.host)
     return answer
