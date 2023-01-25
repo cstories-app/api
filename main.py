@@ -2,6 +2,8 @@
 # To run locally:
 #   Terminal: uvicorn main:app --reload
 #   Browser: http://127.0.0.1:8000.
+# Google Python modules:
+#   pip install --upgrade google-authgoogle-api-python-client google-auth-httplib2 google-auth-oauthlib 
 from fastapi import FastAPI, Request
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
