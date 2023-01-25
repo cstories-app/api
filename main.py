@@ -1,9 +1,17 @@
+# https://fastapi.tiangolo.com/tutorial/first-steps/
+# To run locally:
+#   Terminal: uvicorn main:app --reload
+#   Browser: http://127.0.0.1:8000.
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import openai
 from dotenv import load_dotenv
+# gsheet
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
 
 app = FastAPI()
 
@@ -20,6 +28,10 @@ app.add_middleware(
 # load OPENAI_API_KEY from .env
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# load Google Service Account Key and Scopes
+GKEY_JSON = os.getenv("PATH_GOOGLE-SA_KEY_JSON")
+GSCOPES = ["https://www.googleapis.com/auth/drive", "https://www.googleapis.com/auth/drive.file", "https://www.googleapis.com/auth/spreadsheets"]
 
 @app.get("/")
 async def root():
