@@ -154,3 +154,11 @@ Live at [https://api.cstories.app](https://api.cstories.app)
     ```sh
     sudo certbot --apache certonly
     ```
+
+### Cron
+
+Schedule the API to start automatically after reboot using `crontab`.
+
+```sh
+@reboot source /share/github/api/venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000 &
+```
