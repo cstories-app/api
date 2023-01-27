@@ -3,7 +3,10 @@
 #   Terminal: uvicorn main:app --reload
 #   Browser: http://127.0.0.1:8000.
 # Google Python modules:
-#   pip install --upgrade \
+#   pip3.11 install --upgrade \
+#        openai \
+#        python-dotenv \
+#        fastapi \
 #        google-auth \
 #        google-api-python-client \
 #        google-auth-httplib2 \
@@ -11,7 +14,6 @@
 
 import os
 from datetime import datetime
-
 import openai
 from dotenv import load_dotenv
 from fastapi import FastAPI, Request
@@ -27,10 +29,10 @@ app = FastAPI()
 origins = ["*"]
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=origins,
-  allow_credentials=True,
-  allow_methods=["*"],
-  allow_headers=["*"])
+  allow_origins = origins,
+  allow_credentials = True,
+  allow_methods = ["*"],
+  allow_headers = ["*"])
 
 # load OPENAI_API_KEY from .env
 load_dotenv()
@@ -45,7 +47,6 @@ GSCOPES = [
 # https://docs.google.com/spreadsheets/d/1-Httr306NaDwIIt8WKvYewKvJ2K_oEGh8FonJZpFLHA/edit#gid=0
 GSHEET_ID = "1-Httr306NaDwIIt8WKvYewKvJ2K_oEGh8FonJZpFLHA"
 GSHEET_RANGE = "data!A2:D3"
-
 
 def add_q_a(q: str, a: str, client_ip: str) -> None:
   """Add question & answer to Google Sheet.
@@ -69,10 +70,10 @@ def add_q_a(q: str, a: str, client_ip: str) -> None:
       a ]]}
 
     service.spreadsheets().values().append(
-      spreadsheetId=GSHEET_ID,
-      body=data,
-      range="A1:D2",
-      valueInputOption="USER_ENTERED").execute()
+      spreadsheetId = GSHEET_ID,
+      body = data,
+      range = "A1:D2",
+      valueInputOption = "USER_ENTERED").execute()
 
   except HttpError as err:
     raise err
@@ -88,13 +89,13 @@ async def root() -> RedirectResponse:
 def answer(question: str, request: Request) -> str:
     """Query OpenAI with a question and return the response."""
     response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=question,
-        temperature=0.7,
-        max_tokens=709,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0)
+        engine = "text-davinci-003",
+        prompt = question,
+        temperature = 0.7,
+        max_tokens = 709,
+        top_p = 1,
+        frequency_penalty = 0,
+        presence_penalty = 0)
     
     answer = response.choices[0].text.strip()
     add_q_a(question, answer, request.client.host)
