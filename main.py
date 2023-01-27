@@ -57,7 +57,7 @@ def add_q_a(q: str, a: str, client_ip: str) -> None:
 
   try:
     creds = service_account.Credentials.from_service_account_file(
-      GKEY_JSON,).with_scopes(GSCOPES)
+      GKEY_JSON).with_scopes(GSCOPES)
     service = build(
       "sheets", "v4",
       credentials = creds)
