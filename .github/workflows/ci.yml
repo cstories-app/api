@@ -9,12 +9,38 @@ on:
   workflow_dispatch:
 
 jobs:
-  # Python env test
-  python-env:
+  # Dockerfile linter
+  dockerfile-hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          config: ./.github/linters/.hadolint.yaml
+
+  # Dockerfile build check
+  dockerfile-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker image
+        run: docker build --no-cache -t test-image -f Dockerfile .
+
+  # Docker compose build check
+  docker-compose-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build the Docker stack
+        run: docker compose up --build
+
+  # Python unit tests
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10"]
+        python-version: ["3.8", "3.9", "3.10", "3.11"]
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
@@ -26,8 +52,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install ruff pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Test with pytest
+        run: |
+          python -m pytest -v
 
-  # Pre-commit hooks
+  # Pre-commit hooks - for use in private repos.
   pre-commit:
     runs-on: ubuntu-latest
     steps:

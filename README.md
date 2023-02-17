@@ -30,11 +30,7 @@ Live at [https://api.cstories.app](https://api.cstories.app)
 * net-tools
 * python-is-python3
 * python3.10-venv
-* apache2
-
-#### snap
-
-* certbot
+* docker
 
 ### Share
 
@@ -57,7 +53,7 @@ Live at [https://api.cstories.app](https://api.cstories.app)
     sudo chmod -R 2774 /share && \  # inherit, read, write, execute
     ```
 
-## API
+### Local Development
 
 1. Clone the repo
 
@@ -86,79 +82,17 @@ Live at [https://api.cstories.app](https://api.cstories.app)
 1. Run the app
 
     ```sh
-    uvicorn main:app --reload --host 0.0.0.0 --port 8000 &
+    uvicorn main:app --reload --host 0.0.0.0 --port 8000
     ```
 
-### Reverse Proxy
-
-1. Configure reverse proxy with Apache - `/etc/apache/sites-available/api.conf`
-
-    ```apache
-    <VirtualHost *:80>
-        ServerName api.cstories.app
-        ServerSignature Off
-
-        ErrorLog /var/log/apache2/redirect.error.log
-        LogLevel warn
-
-        ProxyPreserveHost On
-        ProxyPass "/" "http://164.92.110.38:8000/"
-        ProxyPassReverse "/" "http://164.92.110.38:8000/"
-
-        #Redirect / https://api.cstories.app
-        RewriteEngine on
-        RewriteCond %{SERVER_NAME} =api.cstories.app
-        RewriteRule ^ https://%{SERVER_NAME}%{REQUEST_URI} [END,NE,R=permanent]
-    </VirtualHost>
-
-    <IfModule mod_ssl.c>
-        <VirtualHost *:443>
-            ServerName api.cstories.app
-            ServerSignature Off
-
-            ErrorLog /var/log/apache2/redirect.error.log
-            LogLevel warn
-
-            ProxyPreserveHost On
-            ProxyPass "/" "http://164.92.110.38:8000/"
-            ProxyPassReverse "/" "http://164.92.110.38:8000/"
-
-            SSLCertificateFile /etc/letsencrypt/live/api.cstories.app/fullchain.pem
-            SSLCertificateKeyFile /etc/letsencrypt/live/api.cstories.app/privkey.pem
-            Include /etc/letsencrypt/options-ssl-apache.conf
-        </VirtualHost>
-    </IfModule>
-    ```
-
-1. Enable necessary modules
+1. Or use the [Dockerfile](./Dockerfile)
 
     ```sh
-    sudo a2enmod ssl
-    sudo a2enmod proxy
+    docker run -it --rm -v $(pwd):/usr/local/app -v ${PATH_GOOGLE_SA_KEY_JSON}:/usr/local $(docker build -q -t fastapi .)
     ```
 
-1. Enable the site
+### Docker
 
-    ```sh
-    sudo a2ensite api.conf
-    ```
+[Install docs for Ubuntu](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
 
-1. Restart Apache
-
-    ```sh
-    sudo systemctl restart apache2
-    ```
-
-1. Generate SSL certificates
-
-    ```sh
-    sudo certbot --apache certonly
-    ```
-
-### Cron
-
-Schedule the API to start automatically after reboot using `crontab`.
-
-```sh
-@reboot source /share/github/api/venv/bin/activate && uvicorn main:app --reload --host 0.0.0.0 --port 8000 &
-```
+Run the Docker stack in daemon mode: `docker compose up -d`
