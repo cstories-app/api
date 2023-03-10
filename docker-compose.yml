@@ -2,27 +2,29 @@
 version: "3.8"
 
 services:
-  caddy:
-    container_name: caddy
-    image: caddy:latest
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-    restart: always
+  # caddy:
+  #   container_name: caddy
+  #   image: caddy:latest
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./Caddyfile:/etc/caddy/Caddyfile
+  #     - caddy_data:/data
+  #     - caddy_config:/config
+  #   restart: always
 
   fastapi:
     build: .
     volumes:
       - ${PATH_GOOGLE_SA_KEY_JSON}:/usr/local/cstories-google-key.json
       - .:/usr/local/app
-    depends_on:
-      - caddy
+    # depends_on:
+    #   - caddy
+    ports:
+      - 8000:8000
     restart: always
 
-volumes:
-  caddy_data:
-  caddy_config:
+# volumes:
+#   caddy_data:
+#   caddy_config:
