@@ -91,7 +91,7 @@ async def root() -> RedirectResponse:
 def answer(question: str, request: Request) -> str:
     """Query OpenAI with a question and return the response."""
     response = openai.Completion.create(
-        engine="gpt-4o-mini",
+        engine="gpt-3.5-turbo-instruct",
         prompt=question,
         temperature=0.7,
         max_tokens=709,
